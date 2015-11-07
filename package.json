@@ -1,20 +1,28 @@
 {
-  "name": "moongo-crud",
-  "version": "0.0.1",
+  "name": "mongo-crud",
+  "version": "1.0.0",
   "description": "A simple CRUD interface library for MongoDB on the Node.js platform.",
-  "author": "Cherlton Millette <cherlton.millette@gmail.com>",
-  "main": "lib/crud.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wryi/mongo-crud"
-  },
-  "keywords": [
-    "crud",
-    "mongodb",
-    "node"
-  ],
+  "main": "index.js",
   "dependencies": {
     "mongodb": "^2.0.48"
   },
-  "license": "MIT"
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wryi/mongo-crud.git"
+  },
+  "keywords": [
+    "mongo",
+    "crud",
+    "nodejs"
+  ],
+  "author": "Cherlton Millette <cherlton.millette@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wryi/mongo-crud/issues"
+  },
+  "homepage": "https://github.com/wryi/mongo-crud#readme"
 }
