@@ -78,6 +78,31 @@ The following snippet shows the different ways to query for documents.
 
 ```
 
+### **U**pdate
+The update operation can only be defined upon a single object. This library does not facilitate bulk updates. To use the update feature it is recommended you retrieve the object you want to update, change the properties that need changing and finally pass the updated object to the function.
+
+ * @param {string} collection The name of the target mongo collection.
+ * @param {object} criteria The match criteria for the mongo where clause.
+ * @param {function} callback The command result callback.
+
+The following snippet shows the different ways to query for documents.
+```
+  mongo.retrieve('Foo', {foo: bar}, function (err, result) {
+      if (err) throw err;
+      
+      // for each object returned perform set the property foo == block.
+      for(var i = result.length - 1; i >= 0; i--) {
+      	var foo = result[i]; 
+        foo.foo = 'block';
+        
+        // save the update.
+        mongo.update(foo, function (err, result) {
+        	// handle any errors here.
+        });
+      }
+  });
+
+```
 ## Dependencies
 
  * [mongodb](https://github.com/mongodb/node-mongodb-native) - The mongodb drivers for Nodejs.
