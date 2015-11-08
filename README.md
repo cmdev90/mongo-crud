@@ -40,7 +40,6 @@ The create operation saves any object passed as a document to the MongoDB collec
  * @param {string} collection The name of the target mongo collection.
  * @param {object} doc The document to be stored.
  * @param {function} callback The command result callback.
- * @return {null}
 
 The following example shows how to store the object ```{foo: bar}``` to the collection **Foo**.
 ```
@@ -51,6 +50,34 @@ The following example shows how to store the object ```{foo: bar}``` to the coll
   });
 
 ```
+
+### **R**etrieve
+The retrieve operation returns an array of objects from the specified collection that matches the criteria. The criteria parameter is optional. If omitted, the array will contain all the objects held in the specified collection. Read the [MongoDB documentation on Querying](https://docs.mongodb.org/manual/tutorial/query-documents/) to understand how to build complex search criteria.
+
+ * @param {string} collection The name of the target mongo collection.
+ * @param {object} criteria The match criteria for the mongo where clause.
+ * @param {function} callback The command result callback.
+
+The following snippet shows the different ways to query for documents.
+```
+  // Example 1
+  mongo.retrieve('Foo', function (err, result) {
+      if (err) throw err;
+      
+      // result contains an array with all objects in the collection Foo
+      
+  });
+  
+  // Example 2
+  mongo.retrieve('Foo', {foo: bar}, function (err, result) {
+      if (err) throw err;
+      
+      // result contains an array with all object with peroperty foo == bar in the collection Foo
+      
+  });
+
+```
+
 ## Dependencies
 
  * [mongodb](https://github.com/mongodb/node-mongodb-native) - The mongodb drivers for Nodejs.
