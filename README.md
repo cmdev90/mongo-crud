@@ -58,7 +58,7 @@ The retrieve operation returns an array of objects from the specified collection
  * @param {object} criteria The match criteria for the mongo where clause.
  * @param {function} callback The command result callback.
 
-The following snippet shows the different ways to query for documents.
+The following snippet shows the different ways to retrieve documents.
 ```
   // Example 1
   mongo.retrieve('Foo', function (err, result) {
@@ -85,7 +85,7 @@ The update operation can only be defined upon a single object. This library does
  * @param {object} criteria The match criteria for the mongo where clause.
  * @param {function} callback The command result callback.
 
-The following snippet shows the different ways to query for documents.
+The following snippet shows how to update documents using the retrieve operation for matching.
 ```
   mongo.retrieve('Foo', {foo: bar}, function (err, result) {
       if (err) throw err;
@@ -103,9 +103,56 @@ The following snippet shows the different ways to query for documents.
   });
 
 ```
+
+### **D**elete
+The syntax for the delete and retrieve operations are virtually the same. The difference is in the behaviours. Instead of returning to the callback an array of matching objects, the delete function actually removes matching objects from the collection *(Bloody crazy right!!)*
+
+ * @param {string} collection The name of the target mongo collection.
+ * @param {object} criteria The match criteria for the mongo where clause.
+ * @param {function} callback The command result callback.
+
+The following snippet shows the differnt ways to delete documents.
+```
+  // Example 1
+  mongo.delete('Foo', function (err, result) {
+      if (err) throw err;
+      
+      // deletes all documents in the collection Foo
+      
+  });
+  
+  // Example 2
+  mongo.delete('Foo', {foo: bar}, function (err, result) {
+      if (err) throw err;
+      
+      // deletes all documents with peroperty foo == bar in the collection Foo
+      
+  });
+
+```
 ## Dependencies
 
  * [mongodb](https://github.com/mongodb/node-mongodb-native) - The mongodb drivers for Nodejs.
 
 ## License
-* MIT
+The MIT License (MIT)
+
+Copyright (c) 2015 Cherlton Millette
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
