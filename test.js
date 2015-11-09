@@ -6,7 +6,10 @@ mongo.connect('mongodb://localhost/db');
 
 // wait 2 seconds to confirm the connection and initilize the object.
 setTimeout(function () {
-  mongo.create('People', {name: 'Kalidia Millette', position: 'Cow Mechanic', rank: '...'}, function (err, result){
+
+	if (mongo.isReady()) { 
+
+		mongo.create('People', {name: 'Kalidia Millette', position: 'Cow Mechanic', rank: '...'}, function (err, result){
       console.log(err, result); 
       var recent = result.insertedIds[0];
       mongo.retrieve('People', {name: 'Kalidia Millette'}, function (err, result) {
@@ -24,5 +27,6 @@ setTimeout(function () {
           });
         })
       });
-  });
+  	});
+	}
 }, 2000);
