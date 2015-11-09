@@ -40,7 +40,6 @@ The create operation saves any object passed as a document to the MongoDB collec
  * @param {string} collection The name of the target mongo collection.
  * @param {object} doc The document to be stored.
  * @param {function} callback The command result callback.
- * @return {null}
 
 The following example shows how to store the object ```{foo: bar}``` to the collection **Foo**.
 ```
@@ -51,9 +50,107 @@ The following example shows how to store the object ```{foo: bar}``` to the coll
   });
 
 ```
+
+### **R**etrieve
+The retrieve operation returns an array of objects from the specified collection that matches the criteria. The criteria parameter is optional. If omitted, the array will contain all the objects held in the specified collection. Read the [MongoDB documentation on Querying](https://docs.mongodb.org/manual/tutorial/query-documents/) to understand how to build complex search criteria.
+
+ * @param {string} collection The name of the target mongo collection.
+ * @param {object} criteria The match criteria for the mongo where clause.
+ * @param {function} callback The command result callback.
+
+The following snippet shows the different ways to retrieve documents.
+```
+  // Example 1
+  mongo.retrieve('Foo', function (err, result) {
+      if (err) throw err;
+      
+      // result contains an array with all objects in the collection Foo
+      
+  });
+  
+  // Example 2
+  mongo.retrieve('Foo', {foo: bar}, function (err, result) {
+      if (err) throw err;
+      
+      // result contains an array with all object with peroperty foo == bar in the collection Foo
+      
+  });
+
+```
+
+### **U**pdate
+The update operation can only be defined upon a single object. This library does not facilitate bulk updates. To use the update feature it is recommended you retrieve the object you want to update, change the properties that need changing and finally pass the updated object to the function.
+
+ * @param {string} collection The name of the target mongo collection.
+ * @param {object} criteria The match criteria for the mongo where clause.
+ * @param {function} callback The command result callback.
+
+The following snippet shows how to update documents using the retrieve operation for matching.
+```
+  mongo.retrieve('Foo', {foo: bar}, function (err, result) {
+      if (err) throw err;
+      
+      // for each object returned perform set the property foo == block.
+      for(var i = result.length - 1; i >= 0; i--) {
+      	var foo = result[i]; 
+        foo.foo = 'block';
+        
+        // save the update.
+        mongo.update(foo, function (err, result) {
+        	// handle any errors here.
+        });
+      }
+  });
+
+```
+
+### **D**elete
+The syntax for the delete and retrieve operations are virtually the same. The difference is in the behaviours. Instead of returning to the callback an array of matching objects, the delete function actually removes matching objects from the collection *(Bloody crazy right!!)*
+
+ * @param {string} collection The name of the target mongo collection.
+ * @param {object} criteria The match criteria for the mongo where clause.
+ * @param {function} callback The command result callback.
+
+The following snippet shows the differnt ways to delete documents.
+```
+  // Example 1
+  mongo.delete('Foo', function (err, result) {
+      if (err) throw err;
+      
+      // deletes all documents in the collection Foo
+      
+  });
+  
+  // Example 2
+  mongo.delete('Foo', {foo: bar}, function (err, result) {
+      if (err) throw err;
+      
+      // deletes all documents with peroperty foo == bar in the collection Foo
+      
+  });
+
+```
 ## Dependencies
 
  * [mongodb](https://github.com/mongodb/node-mongodb-native) - The mongodb drivers for Nodejs.
 
 ## License
-* MIT
+The MIT License (MIT)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
