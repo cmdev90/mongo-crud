@@ -1,32 +1,37 @@
-var mongo = require('./');
+var Mongo = require('./');
 
-console.log(mongo);
+Mongo.create('TC', 'triniclassifieds');
+Mongo.TC.insert('test', {});
 
-mongo.connect('mongodb://localhost/db');
 
-// wait 2 seconds to confirm the connection and initilize the object.
-setTimeout(function () {
 
-	if (mongo.isReady()) { 
+// console.log(mongo);
 
-		mongo.create('People', {name: 'Kalidia Millette', position: 'Cow Mechanic', rank: '...'}, function (err, result){
-      console.log(err, result); 
-      var recent = result.insertedIds[0];
-      mongo.retrieve('People', {name: 'Kalidia Millette'}, function (err, result) {
-        console.log(err, result);
-        mongo.update('People', {_id: recent, rank: 'Novice'} ,function (err, result){
-          console.log(err, result);
-          mongo.retrieve('People', {name: 'Kalidia Millette'}, function (err, result) {
-            console.log(err, result);
-            mongo.delete('People', function (err, result) {
-              console.log(err, result);
-              mongo.retrieve('People', {name: 'Kalidia Millette'}, function (err, result) {
-                console.log(err, result);
-              });
-            })
-          });
-        })
-      });
-  	});
-	}
-}, 2000);
+// mongo.connect('mongodb://localhost/db');
+
+// // wait 2 seconds to confirm the connection and initilize the object.
+// setTimeout(function () {
+
+// 	if (mongo.isReady()) { 
+
+// 		mongo.create('People', {name: 'Kalidia Millette', position: 'Cow Mechanic', rank: '...'}, function (err, result){
+//       console.log(err, result); 
+//       var recent = result.insertedIds[0];
+//       mongo.retrieve('People', {name: 'Kalidia Millette'}, function (err, result) {
+//         console.log(err, result);
+//         mongo.update('People', {_id: recent, rank: 'Novice'} ,function (err, result){
+//           console.log(err, result);
+//           mongo.retrieve('People', {name: 'Kalidia Millette'}, function (err, result) {
+//             console.log(err, result);
+//             mongo.delete('People', function (err, result) {
+//               console.log(err, result);
+//               mongo.retrieve('People', {name: 'Kalidia Millette'}, function (err, result) {
+//                 console.log(err, result);
+//               });
+//             })
+//           });
+//         })
+//       });
+//   	});
+// 	}
+// }, 2000);
