@@ -1,6 +1,7 @@
 var Mongo = require('./');
 
-Mongo.create('TC', 'triniclassifieds');
+Mongo.create('TC', 'mongodb://localhost/triniclassifieds');
+
 Mongo.TC.insert('test', {});
 
 
