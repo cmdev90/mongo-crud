@@ -1,21 +1,17 @@
-var Mongo = require('./');
 var assert = require('chai').assert;
-
-var db = 'mongodb://localhost/triniclassifieds'
-var alias = 'Classifieds';
+var DBInterface = require('../lib/dbinterface.class');
+var _ = require('lodash');
 
 var person = {
-  name: 'Kalidia', 
-  position: 'Cow Mechanic', 
-  rank: '...'
-};
-
-var DBInterface = require('./lib/dbinterface.class');
-var dbOptions = {
-  host: 'localhost',
-  port: 27017,
-  db: 'triniclassifieds'
-}
+    name: 'Kalidia', 
+    position: 'Cow Mechanic', 
+    rank: '...'
+  }, 
+  dbOptions = {
+    host: 'localhost',
+    port: 27017,
+    db: 'triniclassifieds'
+  };
 
 describe('DBInterface.Class', function () {
   it('should be of type function', function (){
@@ -44,22 +40,23 @@ describe('DBInterface.Class', function () {
     assert.isFunction(dbinterface.remove);
   });
 
-  describe('#setCollection', function () {
-    it('should set the object collection for executing queries.', function () {
+  describe('#using', function () {
+    it('should set the object collection for executing queries and return self for chaining.', function () {
       var dbinterface = new DBInterface();
-      assert.isFunction(dbinterface.setCollection);
+      assert.isFunction(dbinterface.using);
 
-      dbinterface.setCollection('sample');
+      var interface = dbinterface.using('sample');
       assert.isNotNull(dbinterface.collection);
       assert.isString(dbinterface.collection);
       assert.equal(dbinterface.collection, 'sample');
+      assert(_.isEqual(dbinterface, interface));
     });
   });
 
   describe('#insert()', function () {
     it('should add person object to the People collection.', function (done) {
       var dbinterface = new DBInterface();
-      dbinterface.setCollection('sample');
+      dbinterface.using('sample');
 
       dbinterface.insert(person, function (err, result) {
         assert.isNull(err, 'there was no error');
@@ -74,7 +71,7 @@ describe('DBInterface.Class', function () {
   describe('#find()', function() {
     it('should find all people records.', function (done){
       var dbinterface = new DBInterface();
-      dbinterface.setCollection('sample');
+      dbinterface.using('sample');
 
       assert.isString(dbinterface.collection);
       
@@ -87,7 +84,7 @@ describe('DBInterface.Class', function () {
 
     it('should find people records with the name `Kalidia`.', function (done) {
       var dbinterface = new DBInterface();
-      dbinterface.setCollection('sample');
+      dbinterface.using('sample');
       
       dbinterface.find({'name': 'Kalidia'}, function (err, people) {
         if(err) return done(err);
@@ -107,7 +104,7 @@ describe('DBInterface.Class', function () {
   describe('#update()', function () {
     it('should update all people records with name `Kalidia` to property rank: `Novice`.', function (done) {
       var dbinterface = new DBInterface();
-      dbinterface.setCollection('sample');
+      dbinterface.using('sample');
       
       dbinterface.update({'rank': 'Novice'}, {'name': 'Kalidia'}, function (err, result) {
         if (err) return done(err);
@@ -121,7 +118,7 @@ describe('DBInterface.Class', function () {
       person.name = "Cherlton";
       person.position = "Developer";
       var dbinterface = new DBInterface();
-      dbinterface.setCollection('sample');
+      dbinterface.using('sample');
       
       dbinterface.update(person, function (err, result) {
         if (err) return done(err);
@@ -135,26 +132,27 @@ describe('DBInterface.Class', function () {
   describe('#remove()', function () {
     it('should remove all people records with name `Kalidia`.', function (done) {
       var dbinterface = new DBInterface();
-      dbinterface.setCollection('sample');
+      dbinterface.using('sample');
       
       dbinterface.remove({'name': 'Kalidia'}, done);
     });
 
     it('should remove the newly inserted person record.', function (done) {
       var dbinterface = new DBInterface();
-      dbinterface.setCollection('sample');
+      dbinterface.using('sample');
       
       dbinterface.remove(person, done);
     });
 
     it('should remove all person records.', function (done) {
       var dbinterface = new DBInterface();
-      dbinterface.setCollection('sample');
+      dbinterface.using('sample');
       
       dbinterface.remove(done);
     });
   });
 });
+
 
 /*
 describe('Mongo', function (){
