@@ -4,9 +4,13 @@
   "description": "A simple CRUD interface library for MongoDB on the Node.js platform.",
   "main": "index.js",
   "dependencies": {
+    "async": "^2.0.0-rc.5",
     "mongodb": "^2.0.48"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "*"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
