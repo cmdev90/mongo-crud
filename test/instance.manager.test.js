@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var db = require('../lib/instance.manager.class');
+var db = require('../');
 
 var options = {
     host: 'localhost',
