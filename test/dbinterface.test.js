@@ -14,6 +14,8 @@ var person = {
   };
 
 describe('DBInterface.Class', function () {
+  this.slow(25);
+
   it('should be of type function', function (){
     assert.isFunction(DBInterface);
   });
