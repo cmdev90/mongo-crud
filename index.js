@@ -1,1 +1,1 @@
-module.exports = require('./lib/crud.js');
+module.exports = require('./lib/instance.manager.class');
